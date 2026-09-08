@@ -1,0 +1,23 @@
+model Department {
+    id          String  @id @default(uuid())
+    name        String  @unique
+    shortName   String  @unique
+    code        String  @unique
+    description String?
+
+    facultyId String
+    faculty   Faculty @relation(fields: [facultyId], references: [id])
+
+    headOfDeptId String? @unique
+
+    // Audit Trail
+    createdById String 
+    createdBy   User   @relation(fields: [createdById], references: [id])
+
+    //   teachers          Teacher[]       @relation("DepartmentTeachers")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("departments")
+}

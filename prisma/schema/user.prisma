@@ -11,7 +11,7 @@ model User {
 
   googleId       String? @unique
   profilePhoto   String?
-  profilePhotoId String? // cloudinary public_id
+  profilePhotoId String? 
 
   refreshToken      String?
   passwordChangedAt DateTime?
@@ -29,6 +29,7 @@ model User {
   superAdmin SuperAdmin?
   //   student           Student?
     faculties           Faculty[]
+    departments         Department[]
   //   staff             Staff?
   //   admin             Admin?
   //   parent            Parent?
