@@ -1,0 +1,32 @@
+model Teacher {
+    id     String @id @default(uuid())
+    userId String @unique
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    employeeId   String     @unique
+    fullName     String
+    gender       Gender?
+    designation  TeacherDesignation
+    departmentId String
+    department   Department @relation(fields: [departmentId], references: [id])
+
+    joiningDate   DateTime
+    qualification String?
+    nidNumber     String?
+    address       String?
+    dateOfBirth   DateTime?
+
+    basicSalary Decimal? @db.Decimal(10, 2)
+
+    //   hodOf          Department?  @relation("HOD")
+    //   sections       Section[]
+    //   leaves         LeaveApplication[]
+    //   payrolls       Payroll[]
+    //   evaluations    FacultyEvaluation[]
+    //   thesisSupervised Thesis[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("teachers")
+}
