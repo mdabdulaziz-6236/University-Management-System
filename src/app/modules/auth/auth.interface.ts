@@ -5,6 +5,13 @@ export interface ILoginUserPayload {
 	password: string;
 }
 
+export interface IChangePasswordPayload {
+	oldPassword: string;
+	newPassword: string;
+}
+
+/* not used */
+
 export interface IVerifyEmailPayload {
 	email: string;
 	otp: string;

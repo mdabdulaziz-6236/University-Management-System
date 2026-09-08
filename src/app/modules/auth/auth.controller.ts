@@ -71,7 +71,29 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+export const changePassword = catchAsync(
+	async (req: Request, res: Response) => {
+		const userId = req.user?.userId;
+
+		if (!userId) {
+			throw new AppError(httpStatus.UNAUTHORIZED, "You are not logged in");
+		}
+
+		const payload = req.body;
+
+		await authServices.changePassword(userId, payload);
+
+		sendResponse(res, {
+			statusCode: httpStatus.OK,
+			success: true,
+			message: "Password changed successfully",
+			data: null,
+		});
+	},
+);
+
 export const AuthController = {
 	loginUser,
 	refreshToken,
+	changePassword,
 };
