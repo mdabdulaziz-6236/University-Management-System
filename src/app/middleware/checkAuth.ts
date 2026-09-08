@@ -10,7 +10,6 @@ import { jwtUtils } from "../utils/jwt";
 
 export interface RequestUser {
 	email: string;
-	name: string;
 	userId: string;
 	role: Role;
 }
@@ -59,7 +58,6 @@ export const auth = (...requiredRoles: Role[]) => {
 			where: {
 				id: userId,
 				email,
-				name,
 				role,
 			},
 		});
@@ -71,7 +69,7 @@ export const auth = (...requiredRoles: Role[]) => {
 			);
 		}
 
-		if (user.status === "BlOCKED") {
+		if (user.status === "BLOCKED") {
 			throw new AppError(
 				httpStatus.FORBIDDEN,
 				"Your account has been blocked. Please contact support.",
@@ -80,7 +78,6 @@ export const auth = (...requiredRoles: Role[]) => {
 
 		req.user = {
 			email,
-			name,
 			userId,
 			role,
 		};
