@@ -1,0 +1,208 @@
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum Role {
+  // --- Top Level Administration ---
+  SUPER_ADMIN // সিস্টেমের সম্পূর্ণ কন্ট্রোল (System Owner)
+  ADMIN // সাধারণ অ্যাডমিনিস্ট্রেশন (General Admin)
+  REGISTRAR // স্টুডেন্ট রেকর্ড, পলিসি এবং একাডেমিক কার্যক্রম প্রধান
+
+  // --- Academic Leadership ---
+  DEAN // একটি পুরো ফ্যাকাল্টি বা স্কুলের প্রধান (Head of Faculty)
+  HOD // ডিপার্টমেন্টের প্রধান (Head of Department)
+
+  // --- Teaching & Academic Support ---
+  FACULTY // নিয়মিত শিক্ষক (Lecturer, Professor)
+  ADJUNCT_FACULTY // পার্ট-টাইম বা গেস্ট টিচার
+  TEACHING_ASSISTANT // টিএ (TA), যারা খাতা দেখা বা অনলাইন ক্লাস মডারেট করে
+  EXAMINER // পরীক্ষা নিয়ন্ত্রক বা খাতা মূল্যায়ক (অনেক সময় এক্সটার্নাল হয়)
+
+  // --- Students & Community ---
+  STUDENT // রানিং স্টুডেন্ট
+  ALUMNI // গ্র্যাজুয়েট করা প্রাক্তন স্টুডেন্ট
+  PARENT // স্টুডেন্টের অভিভাবক (গ্রেড বা ডিউস দেখার জন্য)
+
+  // --- Operations & Support ---
+  STAFF // সাধারণ অফিস স্টাফ
+  IT_ADMIN // অনলাইন সিস্টেম, LMS এবং টেকনিক্যাল সাপোর্ট দেখভাল করার জন্য
+  ADMISSION_OFFICER // শুধু ভর্তি প্রক্রিয়া এবং ডকুমেন্ট ভেরিফিকেশনের জন্য
+  COUNSELOR // স্টুডেন্টদের একাডেমিক বা মেন্টাল হেলথ কাউন্সেলিংয়ের জন্য
+  HR_MANAGER // শিক্ষক এবং স্টাফদের নিয়োগ ও পেরোল (Payroll) ম্যানেজমেন্ট
+
+  // --- Finance & Resources ---
+  ACCOUNTANT // ফি, ইনভয়েস এবং পেমেন্ট ম্যানেজমেন্ট
+  LIBRARIAN // ফিজিক্যাল এবং ডিজিটাল লাইব্রেরি অ্যাক্সেস কন্ট্রোল
+  AUDITOR // সিস্টেমের ফাইন্যান্সিয়াল অডিট করার জন্য (View-only access)
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum AccountStatus {
+  ACTIVE
+  PENDING
+  SUSPENDED
+  INACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum AdmissionStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  WAITLISTED
+}
+
+enum AuthProvider {
+  GOOGLE
+  CREDENTIAL
+}
+
+enum EnrollmentStatus {
+  ENROLLED
+  COMPLETED
+  DROPPED
+  FAILED
+  RETAKE
+}
+
+enum SemesterStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum ExamType {
+  MIDTERM
+  FINAL
+  QUIZ
+  ASSIGNMENT
+  RETAKE
+  IMPROVEMENT
+}
+
+enum GradeLetter {
+  A_PLUS
+  A
+  A_MINUS
+  B_PLUS
+  B
+  B_MINUS
+  C_PLUS
+  C
+  D
+  F
+}
+
+enum PaymentGateway {
+  BKASH
+  STRIPE
+  MANUAL
+  BANK_TRANSFER
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum InvoiceStatus {
+  UNPAID
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum LeaveType {
+  SICK
+  CASUAL
+  EARNED
+  MATERNITY
+  PATERNITY
+  UNPAID
+}
+
+enum BookStatus {
+  AVAILABLE
+  ISSUED
+  LOST
+  DAMAGED
+  RESERVED
+}
+
+enum HostelRoomStatus {
+  AVAILABLE
+  OCCUPIED
+  MAINTENANCE
+}
+
+enum NoticeAudience {
+  ALL
+  STUDENTS
+  FACULTY
+  STAFF
+  SPECIFIC_DEPARTMENT
+  SPECIFIC_BATCH
+}
+
+enum ComplaintStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  REJECTED
+}
+
+enum ComplaintPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum ScholarshipType {
+  MERIT_BASED
+  NEED_BASED
+  SPORTS
+  RESEARCH
+  MINORITY
+}
+
+enum ScholarshipStatus {
+  APPLIED
+  APPROVED
+  REJECTED
+  DISBURSED
+}
+
+enum AssignmentSubmissionStatus {
+  SUBMITTED
+  LATE
+  GRADED
+  MISSING
+}

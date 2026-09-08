@@ -1,0 +1,30 @@
+model SuperAdmin {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // ১. বেসিক ইনফরমেশন
+  fullName     String
+  designation  String? // যেমন: "System Architect", "Founder"
+  profileImage String?
+
+  // ২. কন্টাক্ট এবং ডেমোগ্রাফিক 
+  contactNo        String?   @unique
+  emergencyContact String?
+  gender           Gender? // আপনার স্কিমার Gender enum ব্যবহার করা হলো
+  bloodGroup       String?
+  dateOfBirth      DateTime?
+  presentAddress   String?
+  permanentAddress String?
+
+  // ৩. সিস্টেম ও সিকিউরিটি প্রেফারেন্স (সুপার অ্যাডমিনের জন্য স্পেশাল)
+  isSystemOwner    Boolean @default(false) // সর্বোচ্চ এক্সেস বোঝাতে
+  twoFactorEnabled Boolean @default(false) // 2FA বা OTP লগিনের জন্য
+  lastLoginIp      String? // সিকিউরিটি অডিটের জন্য কোন IP থেকে লগিন করেছে
+  timezone         String? @default("Asia/Dhaka") // সিস্টেম লগের টাইমজোনের জন্য
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("super_admins")
+}

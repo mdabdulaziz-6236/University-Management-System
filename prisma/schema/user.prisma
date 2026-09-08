@@ -1,0 +1,45 @@
+model User {
+  id       String        @id @default(uuid())
+  email    String        @unique
+  phone    String?       @unique
+  password String?
+  role     Role
+  status   AccountStatus @default(ACTIVE)
+
+  isEmailVerified Boolean @default(false)
+  isPhoneVerified Boolean @default(false)
+
+  googleId       String? @unique
+  profilePhoto   String?
+  profilePhotoId String? // cloudinary public_id
+
+  refreshToken      String?
+  passwordChangedAt DateTime?
+
+  otp          String?
+  otpExpiresAt DateTime?
+
+  lastLoginAt DateTime?
+  isDeleted   Boolean   @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations (1:1 profiles per role)
+  superAdmin SuperAdmin?
+  //   student           Student?
+  //   faculty           Faculty?
+  //   staff             Staff?
+  //   admin             Admin?
+  //   parent            Parent?
+
+  //   notifications     Notification[]
+  //   sentMessages      Message[]        @relation("MessageSender")
+  //   receivedMessages  Message[]        @relation("MessageReceiver")
+  //   auditLogs         AuditLog[]
+  //   complaints        Complaint[]
+  //   notices           Notice[]         @relation("NoticeCreatedBy")
+
+  @@index([role])
+  @@map("users")
+}
