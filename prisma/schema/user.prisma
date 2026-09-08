@@ -28,7 +28,7 @@ model User {
   // Relations (1:1 profiles per role)
   superAdmin SuperAdmin?
   //   student           Student?
-  //   faculty           Faculty?
+    faculties           Faculty[]
   //   staff             Staff?
   //   admin             Admin?
   //   parent            Parent?
@@ -39,6 +39,7 @@ model User {
   //   auditLogs         AuditLog[]
   //   complaints        Complaint[]
   //   notices           Notice[]         @relation("NoticeCreatedBy")
+
 
   @@index([role])
   @@map("users")
