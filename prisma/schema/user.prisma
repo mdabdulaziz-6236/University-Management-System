@@ -30,6 +30,7 @@ model User {
   //   student           Student?
     faculties           Faculty[]
     departments         Department[]
+    teachers            Teacher[]
   //   staff             Staff?
   //   admin             Admin?
   //   parent            Parent?

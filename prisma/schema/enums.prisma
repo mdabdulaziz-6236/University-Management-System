@@ -36,6 +36,15 @@ enum Role {
   AUDITOR // সিস্টেমের ফাইন্যান্সিয়াল অডিট করার জন্য (View-only access)
 }
 
+enum TeacherDesignation {
+  LECTURER
+  ASSISTANT_PROFESSOR
+  ASSOCIATE_PROFESSOR
+  PROFESSOR
+  EMERITUS_PROFESSOR
+}
+
+
 enum Gender {
   MALE
   FEMALE
