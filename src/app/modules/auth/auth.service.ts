@@ -6,7 +6,10 @@ import config from "../../config";
 import { prisma } from "../../lib/prisma";
 import { AppError } from "../../utils/AppError";
 import { jwtUtils } from "../../utils/jwt";
-import type { ILoginUserPayload } from "./auth.interface";
+import type {
+	IChangePasswordPayload,
+	ILoginUserPayload,
+} from "./auth.interface";
 
 const loginUser = async (payload: ILoginUserPayload) => {
 	const { password } = payload;
@@ -164,7 +167,50 @@ const refreshToken = async (token: string) => {
 	};
 };
 
+const changePassword = async (
+	userId: string,
+	payload: IChangePasswordPayload,
+) => {
+	const user = await prisma.user.findUnique({
+		where: { id: userId },
+	});
+
+	if (!user || user.isDeleted || user.status !== "ACTIVE") {
+		throw new AppError(httpStatus.UNAUTHORIZED, "User not found or inactive");
+	}
+
+	if (!user.password && user.googleId) {
+		throw new AppError(
+			httpStatus.BAD_REQUEST,
+			"You registered with Google. You cannot change your password here.",
+		);
+	}
+	const isPasswordMatched = await bcrypt.compare(
+		payload.oldPassword,
+		user.password as string,
+	);
+
+	if (!isPasswordMatched) {
+		throw new AppError(httpStatus.UNAUTHORIZED, "Incorrect old password");
+	}
+	const hashedNewPassword = await bcrypt.hash(
+		payload.newPassword,
+		Number(config.bcrypt_salt_rounds),
+	);
+
+	await prisma.user.update({
+		where: { id: userId },
+		data: {
+			password: hashedNewPassword,
+			passwordChangedAt: new Date(),
+		},
+	});
+
+	return null;
+};
+
 export const authServices = {
 	loginUser,
 	refreshToken,
+	changePassword,
 };
