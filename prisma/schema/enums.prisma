@@ -13,10 +13,10 @@ enum Role {
   HOD // ডিপার্টমেন্টের প্রধান (Head of Department)
 
   // --- Teaching & Academic Support ---
-  FACULTY // নিয়মিত শিক্ষক (Lecturer, Professor)
+  TEACHER // নিয়মিত শিক্ষক (Lecturer, Professor)
   ADJUNCT_FACULTY // পার্ট-টাইম বা গেস্ট টিচার
   TEACHING_ASSISTANT // টিএ (TA), যারা খাতা দেখা বা অনলাইন ক্লাস মডারেট করে
-  EXAMINER // পরীক্ষা নিয়ন্ত্রক বা খাতা মূল্যায়ক (অনেক সময় এক্সটার্নাল হয়)
+  EXAMINER // পরীক্ষা নিয়ন্ত্রক বা খাতা মূল্যায়ক (অনেক সময় এক্সটার্নাল হয়)
 
   // --- Students & Community ---
   STUDENT // রানিং স্টুডেন্ট
