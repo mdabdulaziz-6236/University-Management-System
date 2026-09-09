@@ -12,6 +12,7 @@ import { notFound } from "./app/middleware/notFound";
 import { AuthRoutes } from "./app/modules/auth/auth.route";
 import { DepartmentRoutes } from "./app/modules/department/department.route";
 import { FacultyRoutes } from "./app/modules/faculty/faculty.route";
+import { ProgramRoutes } from "./app/modules/program/program.route";
 import { TeacherRoutes } from "./app/modules/teacher/teacher.route";
 import { testRoutes } from "./app/modules/test/test.route";
 
@@ -35,6 +36,7 @@ app.use("/api/v1/auth", AuthRoutes);
 app.use("/api/v1/faculty", FacultyRoutes);
 app.use("/api/v1/department", DepartmentRoutes);
 app.use("/api/v1/teacher", TeacherRoutes);
+app.use("/api/v1/program", ProgramRoutes);
 
 // test route
 app.use("/api/test", testRoutes);
