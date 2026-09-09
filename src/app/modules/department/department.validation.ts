@@ -15,6 +15,16 @@ const createDepartmentZodSchema = z.object({
 	}),
 });
 
+const assignHodZodSchema = z.object({
+	params: z.object({
+		departmentId: z.uuid("Invalid Department ID format"),
+	}),
+	body: z.object({
+		teacherId: z.uuid("Invalid Teacher ID format"),
+	}),
+});
+
 export const DepartmentValidation = {
 	createDepartmentZodSchema,
+	assignHodZodSchema,
 };

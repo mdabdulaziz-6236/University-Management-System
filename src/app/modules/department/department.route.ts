@@ -14,4 +14,11 @@ router.post(
 	departmentControllers.createDepartment,
 );
 
+router.patch(
+	"/:departmentId/assign-hod",
+	auth(Role.SUPER_ADMIN),
+	validateRequest(DepartmentValidation.assignHodZodSchema),
+	departmentControllers.assignHod,
+);
+
 export const DepartmentRoutes = router;

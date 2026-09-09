@@ -16,6 +16,22 @@ const createDepartment = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+/* Create Department Head */
+const assignHod = catchAsync(async (req: Request, res: Response) => {
+	const departmentId = req.params.departmentId as string;
+	const { teacherId } = req.body;
+
+	const result = await departmentServices.assignHod(departmentId, teacherId);
+
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: "Head of Department assigned successfully",
+		data: result,
+	});
+});
+
 export const departmentControllers = {
 	createDepartment,
+	assignHod,
 };

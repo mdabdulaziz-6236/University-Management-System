@@ -3,12 +3,12 @@ model Teacher {
     userId String @unique
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    employeeId   String     @unique
+    employeeId   String             @unique
     fullName     String
     gender       Gender?
     designation  TeacherDesignation
     departmentId String
-    department   Department @relation(fields: [departmentId], references: [id])
+    department   Department         @relation(fields: [departmentId], references: [id])
 
     joiningDate   DateTime
     qualification String?
@@ -18,7 +18,7 @@ model Teacher {
 
     basicSalary Decimal? @db.Decimal(10, 2)
 
-    //   hodOf          Department?  @relation("HOD")
+    hodOf Department? @relation("HOD")
     //   sections       Section[]
     //   leaves         LeaveApplication[]
     //   payrolls       Payroll[]
