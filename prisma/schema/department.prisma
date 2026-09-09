@@ -10,6 +10,7 @@ model Department {
 
     headOfDeptId String? @unique
     headOfDept        Teacher?        @relation("HOD", fields: [headOfDeptId], references: [id])
+    programs        Program[]
     // Audit Trail
     createdById String
     createdBy   User   @relation(fields: [createdById], references: [id])

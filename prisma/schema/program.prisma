@@ -1,0 +1,25 @@
+model Program {
+  id             String       @id @default(uuid())
+  name           String      
+  shortName      String      
+  code           String       @unique 
+  degreeLevel    DegreeLevel
+  durationYears  Int
+  totalCredits   Int
+  
+  departmentId   String
+  department     Department   @relation(fields: [departmentId], references: [id])
+
+  // Audit Trail
+  createdById    String
+  createdBy      User         @relation(fields: [createdById], references: [id])
+
+  // courses        ProgramCourse[]
+  // students       Student[]
+  // admissions     Admission[]
+
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@map("programs")
+}

@@ -4,6 +4,7 @@ import type { RequestUser } from "../../middleware/checkAuth";
 import { AppError } from "../../utils/AppError";
 import { generateEntityCode } from "../../utils/generateCode";
 import type { IDepartmentCreate } from "./department.interface";
+import { Role } from "../../../../generated/prisma/enums";
 
 /* Create Department */
 const createDepartment = async (
@@ -57,50 +58,57 @@ const createDepartment = async (
 
 /* Create Department Head */
 const assignHod = async (departmentId: string, teacherId: string) => {
-	const department = await prisma.department.findUnique({
-		where: { id: departmentId },
+	const transactionResult = await prisma.$transaction(async (tx) => {
+		const department = await tx.department.findUnique({
+			where: { id: departmentId },
+		});
+
+		if (!department) {
+			throw new AppError(httpStatus.NOT_FOUND, "Department not found!");
+		}
+
+		const teacher = await tx.teacher.findUnique({
+			where: { id: teacherId },
+		});
+
+		if (!teacher) {
+			throw new AppError(httpStatus.NOT_FOUND, "Teacher not found!");
+		}
+
+		if (teacher.departmentId !== departmentId) {
+			throw new AppError(
+				httpStatus.BAD_REQUEST,
+				`This teacher belongs to another department. You cannot make him/her the HOD of ${department.name}.`,
+			);
+		}
+
+		if (department.headOfDeptId === teacher.id) {
+			throw new AppError(
+				httpStatus.BAD_REQUEST,
+				`This teacher is already assigned as the Head of Department.`,
+			);
+		}
+
+		await tx.user.update({
+			where: { id: teacher.userId },
+			data: {
+				role: Role.HOD,
+			},
+		});
+
+		const result = await tx.department.update({
+			where: { id: departmentId },
+			data: {
+				headOfDeptId: teacherId,
+			},
+			include: {
+				headOfDept: true,
+			},
+		});
+
+		return result;
 	});
-
-	if (!department) {
-		throw new AppError(httpStatus.NOT_FOUND, "Department not found!");
-	}
-
-	const teacher = await prisma.teacher.findUnique({
-		where: { id: teacherId },
-		include: {
-			hodOf: true,
-		},
-	});
-
-	if (!teacher) {
-		throw new AppError(httpStatus.NOT_FOUND, "Teacher not found!");
-	}
-
-	if (teacher.departmentId !== departmentId) {
-		throw new AppError(
-			httpStatus.BAD_REQUEST,
-			`This teacher belongs to another department. You cannot make him/her the HOD of ${department.name}.`,
-		);
-	}
-
-	if (teacher.hodOf?.headOfDeptId === teacher.id) {
-		throw new AppError(
-			httpStatus.BAD_REQUEST,
-			`This teacher is already assigned as the Head of Department.`,
-		);
-	}
-
-	const result = await prisma.department.update({
-		where: { id: departmentId },
-		data: {
-			headOfDeptId: teacherId,
-		},
-		include: {
-			headOfDept: true,
-		},
-	});
-
-	return result;
+	return transactionResult;
 };
 
 export const departmentServices = {
