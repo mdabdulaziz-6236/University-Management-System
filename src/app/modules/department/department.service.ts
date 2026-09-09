@@ -5,6 +5,7 @@ import { AppError } from "../../utils/AppError";
 import { generateEntityCode } from "../../utils/generateCode";
 import type { IDepartmentCreate } from "./department.interface";
 
+/* Create Department */
 const createDepartment = async (
 	payload: IDepartmentCreate,
 	user: RequestUser,
@@ -54,6 +55,55 @@ const createDepartment = async (
 	return result;
 };
 
+/* Create Department Head */
+const assignHod = async (departmentId: string, teacherId: string) => {
+	const department = await prisma.department.findUnique({
+		where: { id: departmentId },
+	});
+
+	if (!department) {
+		throw new AppError(httpStatus.NOT_FOUND, "Department not found!");
+	}
+
+	const teacher = await prisma.teacher.findUnique({
+		where: { id: teacherId },
+		include: {
+			hodOf: true,
+		},
+	});
+
+	if (!teacher) {
+		throw new AppError(httpStatus.NOT_FOUND, "Teacher not found!");
+	}
+
+	if (teacher.departmentId !== departmentId) {
+		throw new AppError(
+			httpStatus.BAD_REQUEST,
+			`This teacher belongs to another department. You cannot make him/her the HOD of ${department.name}.`,
+		);
+	}
+
+	if (teacher.hodOf?.headOfDeptId === teacher.id) {
+		throw new AppError(
+			httpStatus.BAD_REQUEST,
+			`This teacher is already assigned as the Head of Department.`,
+		);
+	}
+
+	const result = await prisma.department.update({
+		where: { id: departmentId },
+		data: {
+			headOfDeptId: teacherId,
+		},
+		include: {
+			headOfDept: true,
+		},
+	});
+
+	return result;
+};
+
 export const departmentServices = {
 	createDepartment,
+	assignHod,
 };
